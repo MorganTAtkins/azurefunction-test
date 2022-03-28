@@ -19,6 +19,5 @@ steps:
     goals: 'package'
 - task: serverlesSecurity@1
   inputs:
-    customFlags: '--token 9acba180679e804ecc29a2a9839cb0cac5a653fd'
     showNegligible: false
     connection: 'Serverless-saas'
