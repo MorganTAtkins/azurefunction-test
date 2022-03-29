@@ -18,6 +18,20 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
 
+- task: Docker@2
+  displayName: Login to aqua reg
+  inputs:
+    command: login
+    containerRegistry: aqua-reg
+- script: |
+    docker run -v $PWD:/data -w /data -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:6.5 scan --host "${AQUA_HOST}"
+    --user morgan.atkins@aquasec.com
+    --password @Password1 --token "${TOKEN}"
+    --code-scan .
+    --scan-malware --collect-executables --collect-sensitive
+    --htmlfile AquaSecurity.html
+    --jsonfile AquaSecurity.json
+
 - task: aquasecScanner@4
   inputs:
     scanType: 'local'
