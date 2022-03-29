@@ -19,18 +19,12 @@ steps:
     goals: 'package'
 
 - task: aquasecScanner@4
-- task: aquasecScanner@4
   inputs:
     scanType: 'local'
     register: false
     hideBase: false
     showNegligible: false
     windowsScannerVersion: 'Artifacts'
-    runOptions: 'scan'
+    runOptions: 'scan --code-scan . --token "${TOKEN}" --htmlfile AquaSecurity.html --jsonfile AquaSecurity.json'
     connection: 'Serverless-saas'
-    customFlags: '--code-scan . --token "${TOKEN}"'
     caCertificates: true
-- task: serverlesSecurity@1
-  inputs:
-    showNegligible: false
-    connection: 'Serverless-saas'
