@@ -17,6 +17,17 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+
+- task: aquasecScanner@4
+  inputs:
+    scanType: 'local'
+    register: false
+    hideBase: false
+    showNegligible: false
+    windowsScannerVersion: 'Artifacts'
+    connection: 'Serverless-saas'
+    customFlags: '--code-scan . --token "${TOKEN}"'
+    caCertificates: true
 - task: serverlesSecurity@1
   inputs:
     showNegligible: false
