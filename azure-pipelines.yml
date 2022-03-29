@@ -4,7 +4,7 @@ trigger:
 - main
 
 pool:
-  vmImage: windows-latest
+  vmImage: linux
 
 steps:
 - task: Maven@3
@@ -24,12 +24,12 @@ steps:
     command: login
     containerRegistry: aqua-reg
 - script: |
-    docker run -v $PWD:/data -w /data -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:6.5 scan --host "${AQUA_HOST}"
-    --user morgan.atkins@aquasec.com
-    --password @Password1 --token "${TOKEN}"
-    --code-scan .
-    --scan-malware --collect-executables --collect-sensitive
-    --htmlfile AquaSecurity.html
+    docker run -v $PWD:/data -w /data -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:6.5 scan --host "${AQUA_HOST}" /
+    --user morgan.atkins@aquasec.com /
+    --password ${PASSWORD} --token "${TOKEN}" /
+    --code-scan . /
+    --scan-malware --collect-executables --collect-sensitive /
+    --htmlfile AquaSecurity.html / 
     --jsonfile AquaSecurity.json
 
 - task: aquasecScanner@4
